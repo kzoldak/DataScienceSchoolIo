@@ -3,9 +3,13 @@ Least squares is a standard approch in regression analysis for approximating the
 
 ## Regression
 Least squares' most frequently used application is in fitting models to data. When fitting data with a model, the best-fit model (and its parameters) occurs when the sum of the squared residuals is minimized. 
+
 ### Residuals
-Geometrically, residuals are the vertical distances between the dependent variable's (the y variable) observations and its estimates as predicted by the model; or the difference between the data point's y-axis value and the y-model value at the same value of x. Residuals are also referred to as the errors in error analysis. The estimated model value for y (y-model) is always subtracted from the observed y value (y-data) so that positive residuals occur when the data point is located above the model and negative residuals occur when the data point is located below it. 
-#### RSS
+Geometrically, residuals are the vertical distances between the dependent variable's observations (the y variable) and its estimates as predicted by the model; or the difference between the data point's y-axis value and the y-model value at the same value of x. This is usually shown as $(y-\hat{y})$.
+
+Residuals are also referred to as the errors in error analysis. The estimated model value for y (y-model) is always subtracted from the observed y value (y-data) so that positive residuals occur when the data point is located above the model and negative residuals occur when the data point is located below it. 
+
+#### Residual Sum of Squares (RSS)
 Total residuals for a given model is the "residual sum of squares" (RSS). 
 Least squares line minimizes RSS. A lot of people simply refer to this as the "sum of squares" (SOS). sum( (y - ymodel)^2 ). 
 

@@ -32,8 +32,7 @@ This machine learning algorithm needs a 2D array (matrix) of feature data and a 
 * It is a *supervised learning* method because we have a set of known classifications and would like to find the best classification to assign to our unknown observation. 
 * It can make highly accurate predictions if the different classes in the dataset have very dissimilar feature values. 
 * Neighbors-based classification is a type of instance-based learning or non-generalizing learning: it does not attempt to construct a general internal model, but simply stores instances of the training data. 
-
-
+* The *effective* number of k neighbors is *n/k*, where *n* is the number of observations used in the training data set. This is usually larger than *p*, the number of features in the training data set. WHY? Imagine the neighborhoods were non-overlapping. Then there would be *n/k* neighborhoods and we would fit one parameter in each neighborhood. 
 
 
 
