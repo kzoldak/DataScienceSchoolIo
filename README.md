@@ -1,1 +1,5 @@
 # DataScienceSchoolIo
+
+Throughout my journey of learning Maching Learning, I followed one Data Science Instructor's tutorials closely; Justin Markham's. 
+
+On his website, www.dataschool.io, I came across a blog post on [How to launch your data science career (with Python)](https://www.dataschool.io/launch-your-data-science-career-with-python/#step4understandmachinelearninginmoredepth), and so I began to follow it. He provides many Jupyter notbooks on learning or expanding your knowledge of `python`, `pandas`, and machine learning with `scikit-learn`. Not only does he do a great job of educating, he provides extensive resources in nearly every tutorial to expand your knowledge further, if you so desire. Therefore, this repository is one I built to reflect my education of machine learning through Justin's own tools and the resources he provided. 
