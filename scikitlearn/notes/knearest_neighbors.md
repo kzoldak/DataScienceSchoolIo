@@ -1,6 +1,7 @@
 <font color=blue>
 K Nearest Neighbors (KNN)
 </font>
+
 -----------
 
 __!!! WARNING !!!:__ <br></br>
