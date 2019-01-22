@@ -1,11 +1,13 @@
+<font color=blue>
 K Nearest Neighbors (KNN)
+</font>
 -----------
 
-__!!! WARNING !!!:__
+__!!! WARNING !!!:__ <br></br>
 A very low value of k (number of neighbors) overfits the data. It follows the noise in the data rater than the signal. Using a low k creates an overly complex model that overfits the data. 
 
 
-__Great discussion on bias-variance tradeoff with the k-nearest neighbors algorithm.__
+__Great discussion on bias-variance tradeoff with the k-nearest neighbors algorithm.__ <br></br>
 http://scott.fortmann-roe.com/docs/BiasVariance.html
 
 
