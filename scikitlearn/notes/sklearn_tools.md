@@ -16,16 +16,24 @@ https://scikit-learn.org/stable/modules/neighbors.html
 * supervised learning with nearest neighbors classification. 
 * finds nearest neighbors to an unknown observation and classifies that unknown observation based on the classification labels of those neighbors. 
 * Uses training data and a respose.
-* dataset: predicting GRBs that would have been detected by the LAT had they not been outside its field of view. Classes: GBM burst, GBM+LAT burst. 
-* dataset: predicting AGN tye?  Star Cluster type?
-https://scikit-learn.org/stable/modules/neighbors.html#classification
+* dataset: predicting GRBs that would have been detected by the LAT had they not been outside its field of view. 
+
+__Classifying GRBs:__
+
+Could be used to determine if a GRB would have been detected by the high-energy Fermi/LAT instrument if it had been within LAT's field-of-view during observations of the event. Only the GBM (the lower-energy instrument) can observe the entire unocculted sky at all times. 
+
+__Predicting AGN type__
+
+__Predicting Start Cluster Type__
+
 
 ## Logistic Regression
 `from sklearn.linear_model import LogisticRegression`
 * is a linear model for classification rather than regression (despite its name). AKA logit regression in literature. 
 
-In agriculture: modeling crop response
-* The logistic S-curve can be used for modeling the crop response to changes in growth factors. There are two types of response functions: positive and negative growth curves. For example, the crop yield may increase with increasing value of the growth factor up to a certain level (positive function), or it may decrease with increasing growth factor values (negative function owing to a negative growth factor), which situation requires an inverted S-curve.
+__In agriculture: modeling crop response.__
+
+The logistic S-curve can be used for modeling the crop response to changes in growth factors. There are two types of response functions: positive and negative growth curves. For example, the crop yield may increase with increasing value of the growth factor up to a certain level (positive function), or it may decrease with increasing growth factor values (negative function owing to a negative growth factor), which situation requires an inverted S-curve.
 
 
 
