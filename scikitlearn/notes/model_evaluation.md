@@ -67,6 +67,26 @@ One way we can avoid overfitting the training data is to split up the data set i
 
 ### Parameter Tuning
 - selecting the best tuning parameters (aka hyper parameters) for the knn classification model. We want to choose the best tuning parameters that will produce a model that best generalizes to out of sample data. 
+```python
+# search for an optimal value of K for KNN
+k_range = list(range(1, 31))
+k_scores = []
+for k in k_range:
+    knn = KNeighborsClassifier(n_neighbors=k)
+    scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
+    k_scores.append(scores.mean())
+print(k_scores)
+```
+
+
+
+## Advantages to K-fold Cross Validation
+- more reliable estimate for out-of-smaple data than **train/test split**. 
+- can be used for selecting tuning parameters, choosing between models, and selecting featrues. This last one we mean selecting which features imporove the model and which do not. 
+
+## Disadvantages to K-fold Cross Validation
+- can be computationally expensive when the dataset is large or the model is slow to train. 
+
 
 ### K-fold Cross Validation's Advantages over Train/Test Split
 - K-fold cv produces a more accurate estimate for out of sample data.
