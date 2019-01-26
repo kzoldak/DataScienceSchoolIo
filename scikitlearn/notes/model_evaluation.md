@@ -40,12 +40,12 @@ One way we can avoid overfitting the training data is to split up the data set i
 - This procedure works because as far as our model knows, the testing dataset is out-of-sample data. At the time the model was trained, it had no knowledge of the testing dataset's existence. 
 - **Testing accuracy** is a better estimate of out-of-sample data than **training accuracy**. 
 
-## Advantages to Train/Test Split
+### Advantages to Train/Test Split
 - It produces **testing accuracy** and not **training accuracy**, so it penalizes models that are too complex and overfitting the data. Testing accuracy also penalizes on models that are not complex enough. 
 - Flexible and fast.
 
 
-## Disadvantages of Train/Test Split
+### Disadvantages of Train/Test Split
 - Provides a **high-variance estimate** of out-of-sample data. **K-fold cross-validation** overcomes this limitation. 
 
 
@@ -69,6 +69,8 @@ One way we can avoid overfitting the training data is to split up the data set i
 - selecting the best tuning parameters (aka hyper parameters) for the knn classification model. We want to choose the best tuning parameters that will produce a model that best generalizes to out of sample data. 
 ```python
 # search for an optimal value of K for KNN
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.model_selection import cross_val_score
 k_range = list(range(1, 31))
 k_scores = []
 for k in k_range:
@@ -76,15 +78,87 @@ for k in k_range:
     scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')
     k_scores.append(scores.mean())
 print(k_scores)
+# plot the value of K for KNN (x-axis) versus the cross-validated accuracy (y-axis)
+plt.plot(k_range, k_scores)
+plt.xlabel('Value of K for KNN')
+plt.ylabel('Cross-Validated Accuracy')
+```
+#### A more efficient method for parameter tuning is to use `GridSearchCV`.
+- `GridSearchCV` automates the code functionality above. It allows you to define a set of parameters that you want to try with a given model and it will automatically run cross-validation using each of those parameters, keeping track of the resulting scores. It essentially replaces the for loop above while introducing additional functionality. 
+
+```python
+from sklearn.model_selection import GridSearchCV
+k_range = list(range(1, 31)) # knn k values to search
+# create a parameter grid: map the parameter names to the values that should be searched
+param_grid = dict(n_neighbors=k_range) # key is the parameter name, n_neighbors 
+# instantiate the grid
+grid = GridSearchCV(knn, param_grid, cv=10, scoring='accuracy', return_train_score=False) # n_jobs = -1 if you have multiprocessing capability. 
+# fit the grid with data
+grid.fit(X, y)
+print(grid.cv_results_)
+# examine the best model
+print(grid.best_score_)
+print(grid.best_params_)
+print(grid.best_estimator_)
+```
+- The grid object: an object that is ready to do tenfold cross-validation on a knn model using classification accuracy as the evaluation metric. In addition, its given this parameter grid so that it knows that it should repeat the tenfold cross-validation process 30 times and each time the n_neighbors parameter should be given a different value from the list. 
+- If your computer and operating system support parallel processing, you can set the n_jobs parameter to -1 (n_jobs = -1) to instruct scikit-learn to use all available processors. This is done in the step where you would instantiate the grid. 
+- the `GridSearchCV` output, `grid.cv_results_` is a dictionary holding all 30 iterations of n_neighbors. The output dict holds the following information for each iteration: ['mean_fit_time', 'std_fit_time', 'mean_score_time', 'std_score_time', 'param_n_neighbors', 'params', 'split0_test_score', 'split1_test_score', 'split2_test_score', 'split3_test_score', 'split4_test_score', 'split5_test_score', 'split6_test_score', 'split7_test_score', 'split8_test_score', 'split9_test_score', 'mean_test_score', 'std_test_score', 'rank_test_score']. 
+Traditionally, the `mean` is what we focus on. However, the standard deviation `std` is important to keep in mind because whenever it is high, it indicates the cross-validated estimate of the accuracy might not be as reliable. 
+
+**Searching multiple parameters simultaneously**
+
+```python
+# define the parameter values that should be searched
+k_range = list(range(1, 31))
+weight_options = ['uniform', 'distance']
+# create a parameter grid: map the parameter names to the values that should be searched
+param_grid = dict(n_neighbors=k_range, weights=weight_options)
+print(param_grid)
+# instantiate and fit the grid
+grid = GridSearchCV(knn, param_grid, cv=10, scoring='accuracy', return_train_score=False)
+grid.fit(X, y)
+# view the results
+print(grid.cv_results_)
+# examine the best model
+print(grid.best_score_)
+print(grid.best_params_)
+
+```
+
+
+#### A more efficient version of `GridSearchCV` is `RandomizedSearchCV`
+- `RandomizedSearchCV` is a close cousin of `GridSearchCV`.
+- Searching many different parameters at once may be computationally infeasible.
+- `RandomizedSearchCV` searches a subset of the parameters, and you control the computational "budget".
+```python
+from sklearn.model_selection import RandomizedSearchCV
+# specify "parameter distributions" rather than a "parameter grid"
+param_dist = dict(n_neighbors=k_range, weights=weight_options)
+# n_iter controls the number of searches
+rand = RandomizedSearchCV(knn, param_dist, cv=10, scoring='accuracy', n_iter=10, random_state=5, return_train_score=False)
+rand.fit(X, y)
+print(rand.cv_results_)
+# examine the best model
+print(rand.best_score_)
+print(rand.best_params_)
+
+# run RandomizedSearchCV 20 times (with n_iter=10) and record the best score
+best_scores = []
+for _ in range(20):
+    rand = RandomizedSearchCV(knn, param_dist, cv=10, scoring='accuracy', n_iter=10, return_train_score=False)
+    rand.fit(X, y)
+    best_scores.append(round(rand.best_score_, 3))
+print(best_scores)
 ```
 
 
 
-## Advantages to K-fold Cross Validation
+### Advantages to K-fold Cross Validation
 - more reliable estimate for out-of-smaple data than **train/test split**. 
 - can be used for selecting tuning parameters, choosing between models, and selecting featrues. This last one we mean selecting which features imporove the model and which do not. 
 
-## Disadvantages to K-fold Cross Validation
+### Disadvantages to K-fold Cross Validation
 - can be computationally expensive when the dataset is large or the model is slow to train. 
 
 
