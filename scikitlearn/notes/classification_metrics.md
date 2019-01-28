@@ -68,9 +68,32 @@ y_test.value_counts().head(1) / len(y_test)
 print(metrics.confusion_matrix(y_test, y_pred_class))
 ```
 |     	   | Predicted 0  | Predicted 1 |
-| ------------------------------------- |
+| ---------|--------------|------------ |
 | Actual 0 | 	118		  | 	12		| 
 | Actual 1 | 	47		  | 	15		| 
+
+0 - means does not have diabetes
+1 - means has diabetes
+
+
+- So, when we predict that patient 1 has diabetes and they actually do, this is called a **True Positive**. 
+- When we predict that patient 1 has diabetes and they do NOT actually have it, this is called a **False Positive**. We Falsely predicted a positive result. A way to recall this easily; assign 1 to a positive diagnoses and it's easier to remember as a positive result since 1 is a positive value. 
+- When we predict patient 1 does NOT have diabetes and they do NOT have it in reality, this is called a **True Negative**. We truly (accurately) predicted the result was negative. 
+- When we predict patient 1 does NOT have diabetes and they actually have it, this is called a **False Negative**. We falsely predicted that they were negative for diabetes. 
+
+In other words,
+
+|     	   | Predicted 0  | Predicted 1 |
+| ---------|--------------|------------ |
+| Actual 0 | # of TN 	  | # of FP 	| 
+| Actual 1 | # of FN	  | # of TP		| 
+
+
+**Basic terminology**
+- **True Positives (TP):** we *correctly* predicted that they *do* have diabetes
+- **True Negatives (TN):** we *correctly* predicted that they *don't* have diabetes
+- **False Positives (FP):** we *incorrectly* predicted that they *do* have diabetes (a "Type I error")
+- **False Negatives (FN):** we *incorrectly* predicted that they *don't* have diabetes (a "Type II error")
 
 
 
