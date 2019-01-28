@@ -72,16 +72,28 @@ print(metrics.confusion_matrix(y_test, y_pred_class))
 | Actual 0 | 	118		  | 	12		| 
 | Actual 1 | 	47		  | 	15		| 
 
-0 - means does not have diabetes
-1 - means has diabetes
+
+0 - does not have diabetes
+
+1 - has diabetes
 
 
 - So, when we predict that patient 1 has diabetes and they actually do, this is called a **True Positive**. 
 - When we predict that patient 1 has diabetes and they do NOT actually have it, this is called a **False Positive**. We Falsely predicted a positive result. A way to recall this easily; assign 1 to a positive diagnoses and it's easier to remember as a positive result since 1 is a positive value. 
 - When we predict patient 1 does NOT have diabetes and they do NOT have it in reality, this is called a **True Negative**. We truly (accurately) predicted the result was negative. 
-- When we predict patient 1 does NOT have diabetes and they actually have it, this is called a **False Negative**. We falsely predicted that they were negative for diabetes. 
+- When we predict patient 1 does NOT have diabetes and they actually have it, this is called a **False Negative**. We falsely predicted that they were negative for diabetes.
 
-In other words,
+The *first term (True or False)* represents the accuracy of the user's guess to the true response. The *second term (Positive or Negative)* represents the actual true response we are attempting to predict. 
+
+In brief,
+**Basic terminology**
+- **True Positives (TP):** we *correctly* predicted that they *do* have diabetes
+- **True Negatives (TN):** we *correctly* predicted that they *don't* have diabetes
+- **False Positives (FP):** we *incorrectly* predicted that they *do* have diabetes (a "Type I error")
+- **False Negatives (FN):** we *incorrectly* predicted that they *don't* have diabetes (a "Type II error")
+
+
+Thus, the confusion matrix can be shown to represent:
 
 |     	   | Predicted 0  | Predicted 1 |
 | ---------|--------------|------------ |
@@ -89,12 +101,35 @@ In other words,
 | Actual 1 | # of FN	  | # of TP		| 
 
 
-**Basic terminology**
-- **True Positives (TP):** we *correctly* predicted that they *do* have diabetes
-- **True Negatives (TN):** we *correctly* predicted that they *don't* have diabetes
-- **False Positives (FP):** we *incorrectly* predicted that they *do* have diabetes (a "Type I error")
-- **False Negatives (FN):** we *incorrectly* predicted that they *don't* have diabetes (a "Type II error")
+### Metrics computed from a confusion matrix
+The confusion matrix helps you to understand the performance of your classifier. But how can it help you to choose between models? It's not a model evaluation metric, so you can't simply tell scikit-learn to choose the model with the best confusion matrix. However, there are many metrics that can be calculated from a confusion matrix and those can be directly used to choose between models. 
 
+First, we break up the confusion matrix into its constituents:
+```python
+confusion = metrics.confusion_matrix(y_test, y_pred_class)
+TP = confusion[1, 1]
+TN = confusion[0, 0]
+FP = confusion[0, 1]
+FN = confusion[1, 0]
+```
+
+
+**How often is the classifier correct?**
+This would include all those in the confusion matrix starting with *True*; truthfully (accuratley) estimated. 
+```python
+print((TP + TN) / float(TP + TN + FP + FN))
+print(metrics.accuracy_score(y_test, y_pred_class))
+```
+This is referred to as **classification accuracy**. 
+
+
+**How often is the classifier incorrect?** 
+THis would include all those in the confusion matrix starting with *False*; falsely estiamted. 
+```python
+print((FP + FN) / float(TP + TN + FP + FN))
+print(1 - metrics.accuracy_score(y_test, y_pred_class))
+```
+This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
 
 
 
