@@ -116,36 +116,64 @@ FN = confusion[1, 0]  # 47
 **Before answering any of the following questions, read the question, read over the Basic terminologies (definitions of TP, TN, FP, FN), then answer.**
 
 
-#### Question 1: How often is the classifier correct?
-This would include all those in the confusion matrix starting with *True*; truthfully (accuratley) estimated. This is referred to as **classification accuracy**. 
+#### 1. Classification Accuracy: How often is the classifier correct?
+This would include all those in the confusion matrix starting with *True*; truthfully (accuratley) estimated. 
 ```python
 print((TP + TN) / float(TP + TN + FP + FN))
 print(metrics.accuracy_score(y_test, y_pred_class))
 ```
 
 
-#### Question 2: How often is the classifier incorrect?
-This would include all those in the confusion matrix starting with *False*; falsely estiamted. This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
+#### 2. Classification Error: How often is the classifier incorrect?
+This would include all those in the confusion matrix starting with *False*; falsely estiamted. This is also referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
 ```python
 print((FP + FN) / float(TP + TN + FP + FN))
 print(1 - metrics.accuracy_score(y_test, y_pred_class))
 ```
 
-#### Question 3: When the actual value is positive, how often is the prediction correct?
-How "sensitive" is the classifier to detecting positive instances?
-This can be referred to as one of the following: the **sensitivity**, the **true positive rate**, or **recall**.
+
+#### 3. Sensitivity: When the actual value is positive, how often is the prediction correct?
+How "sensitive" is the classifier to detecting positive instances? Sensitivity can also be referred to as the **true positive rate** or **recall**, depending on the area of study.
+
+**Sensitivity is something you want to maximize**. 
+Since 1 means a positive detection of diabetes, **sensitivity** will be high when your classifier accurately estimates 1 for a large number of patients who actually have diabetes. 
 ```python
 print(TP / float(TP + FN))
 print(metrics.recall_score(y_test, y_pred_class))
 ```
+FN means we falsely (incorrectly) guessed (F) that they were negative (N) for diabetes, when they are actually positive for diabetes. This is why FN is a positive diabetes result. 
 
-#### Question 4: When the actual value is negative, how often is the prediction correct?
-How "specific" (or "selective") is the classifier in predicting positive instances?
+#### 4, Specificity: When the actual value is negative, how often is the prediction correct?
+How "specific" (or "selective") is the classifier in predicting positive instances? 
+**Specificity is also something you want to maximize, in addition to sensitivity**. 
 ```python
 print(TN / float(TN + FP))
 ```
+FP means we falsely (incorrectly) guessed (F) that they were positive (P) for diabetes, when they were actually negative for diabetes. This is why FP is a negative diabetes result. 
 
 
+#### 5. False Positive Rate: When the actual value is negative, how often is the prediction incorrect?
+```python
+print(FP / float(TN + FP))
+``` 
 
+#### 6. Precision: When a positive value is predicted, how often is the prediction correct?
+How "precise" is the classifier when predicting positive instances?
+```python
+print(TP / float(TP + FP))
+print(metrics.precision_score(y_test, y_pred_class))
+```
+
+
+### Conclusion:
+
+- Confusion matrix gives you a **more complete picture** of how your classifier is performing
+- Also allows you to compute various **classification metrics**, and these metrics can guide your model selection
+
+**Which metrics should you focus on?**
+
+- Choice of metric depends on your **business objective**
+- **Spam filter** (positive class is "spam"): Optimize for **precision or specificity** because false negatives (spam goes to the inbox) are more acceptable than false positives (non-spam is caught by the spam filter)
+- **Fraudulent transaction detector** (positive class is "fraud"): Optimize for **sensitivity** because false positives (normal transactions that are flagged as possible fraud) are more acceptable than false negatives (fraudulent transactions that are not detected)
 
 
