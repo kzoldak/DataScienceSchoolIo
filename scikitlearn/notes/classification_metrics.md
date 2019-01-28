@@ -114,22 +114,21 @@ FN = confusion[1, 0]
 ```
 
 
-**How often is the classifier correct?**
-This would include all those in the confusion matrix starting with *True*; truthfully (accuratley) estimated. 
+#### Question 1: How often is the classifier correct?
+This would include all those in the confusion matrix starting with *True*; truthfully (accuratley) estimated. This is referred to as **classification accuracy**. 
 ```python
 print((TP + TN) / float(TP + TN + FP + FN))
 print(metrics.accuracy_score(y_test, y_pred_class))
 ```
-This is referred to as **classification accuracy**. 
 
 
-**How often is the classifier incorrect?** 
-THis would include all those in the confusion matrix starting with *False*; falsely estiamted. 
+#### Question 2: How often is the classifier incorrect?
+THis would include all those in the confusion matrix starting with *False*; falsely estiamted. This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
 ```python
 print((FP + FN) / float(TP + TN + FP + FN))
 print(1 - metrics.accuracy_score(y_test, y_pred_class))
 ```
-This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
+
 
 
 
