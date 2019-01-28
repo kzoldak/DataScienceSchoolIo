@@ -80,10 +80,10 @@ print(metrics.confusion_matrix(y_test, y_pred_class))
 
 - So, when we predict that patient 1 has diabetes and they actually do, this is called a **True Positive**. 
 - When we predict that patient 1 has diabetes and they do NOT actually have it, this is called a **False Positive**. We Falsely predicted a positive result. A way to recall this easily; assign 1 to a positive diagnoses and it's easier to remember as a positive result since 1 is a positive value. 
-- When we predict patient 1 does NOT have diabetes and they do NOT have it in reality, this is called a **True Negative**. We truly (accurately) predicted the result was negative. 
+- When we predict patient 1 does NOT have diabetes and they do NOT have it in reality, this is called a **True Negative**. We truly (accurately) predicted the result was negative for diabetes. 
 - When we predict patient 1 does NOT have diabetes and they actually have it, this is called a **False Negative**. We falsely predicted that they were negative for diabetes.
 
-The *first term (True or False)* represents the accuracy of the user's guess to the true response. The *second term (Positive or Negative)* represents the actual true response we are attempting to predict. 
+The *first term (True or False)* represents the accuracy of the user's guess to the true response. The *second term (Positive or Negative)* represents the guess made. 
 
 In brief,
 **Basic terminology**
@@ -107,11 +107,13 @@ The confusion matrix helps you to understand the performance of your classifier.
 First, we break up the confusion matrix into its constituents:
 ```python
 confusion = metrics.confusion_matrix(y_test, y_pred_class)
-TP = confusion[1, 1]
-TN = confusion[0, 0]
-FP = confusion[0, 1]
-FN = confusion[1, 0]
+TP = confusion[1, 1]  # 15
+TN = confusion[0, 0]  # 118
+FP = confusion[0, 1]  # 12
+FN = confusion[1, 0]  # 47
 ```
+
+**Before answering any of the following questions, read the question, read over the Basic terminologies (definitions of TP, TN, FP, FN), then answer.**
 
 
 #### Question 1: How often is the classifier correct?
@@ -123,10 +125,24 @@ print(metrics.accuracy_score(y_test, y_pred_class))
 
 
 #### Question 2: How often is the classifier incorrect?
-THis would include all those in the confusion matrix starting with *False*; falsely estiamted. This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
+This would include all those in the confusion matrix starting with *False*; falsely estiamted. This is referred to as the **misclassification rate**; the rate at which we misclassify the true response. 
 ```python
 print((FP + FN) / float(TP + TN + FP + FN))
 print(1 - metrics.accuracy_score(y_test, y_pred_class))
+```
+
+#### Question 3: When the actual value is positive, how often is the prediction correct?
+How "sensitive" is the classifier to detecting positive instances?
+This can be referred to as one of the following: the **sensitivity**, the **true positive rate**, or **recall**.
+```python
+print(TP / float(TP + FN))
+print(metrics.recall_score(y_test, y_pred_class))
+```
+
+#### Question 4: When the actual value is negative, how often is the prediction correct?
+How "specific" (or "selective") is the classifier in predicting positive instances?
+```python
+print(TN / float(TN + FP))
 ```
 
 
