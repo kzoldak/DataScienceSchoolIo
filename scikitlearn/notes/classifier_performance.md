@@ -1,5 +1,7 @@
+__*Read classification_metrics.md before this.*__
+
 # Classifier Performance
-**How to modify the performance of a classifier by adjusting the classification threshold. _Read classification_metrics.md before this._**
+**How to modify the performance of a classifier by adjusting the classification threshold.**
 
 ```python
 # print the first 10 predicted responses
@@ -88,11 +90,15 @@ print(80 / float(80 + 50))
 # out: 0.6153846153846154
 ```
 
-**Conclusion:**
+### Conclusions:
 
-- **Threshold of 0.5** is used by default (for binary problems) to convert predicted probabilities into class predictions
-- Threshold can be **adjusted** to increase sensitivity or specificity
-- Sensitivity and specificity have an **inverse relationship**
+- **Threshold of 0.5** is used by default (for binary problems) to convert predicted probabilities into class predictions.
+- Threshold can be **adjusted** to increase sensitivity or specificity.
+- Sensitivity and specificity have an **inverse relationship**. Increaing one will always decrease the other. 
+- Adjusting the threshold is one of the last steps you should take in the model building process. The majority of your time should be focused on building better models and then selecting the best possible model. 
+
+
+
 
 
 
